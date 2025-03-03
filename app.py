@@ -78,6 +78,9 @@ def build_nerfreal(sessionid:int)->BaseReal:
     elif opt.model == 'ultralight':
         from lightreal import LightReal
         nerfreal = LightReal(opt,model,avatar)
+    elif opt.model == 'latentsync':
+        from latentreal import LatentReal
+        nerfreal = LatentReal(opt,model,avatar)
     return nerfreal
 
 #@app.route('/offer', methods=['POST'])
@@ -437,6 +440,11 @@ if __name__ == '__main__':
         model = load_model(opt)
         avatar = load_avatar(opt.avatar_id)
         warm_up(opt.batch_size,avatar,160)
+
+    elif opt.model == 'latentsync':
+        from latentreal import load_model,load_avatar
+        model = load_model(opt)
+        avatar = load_avatar(opt)
 
     if opt.transport=='rtmp':
         thread_quit = Event()
